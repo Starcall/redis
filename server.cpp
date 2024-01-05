@@ -43,11 +43,8 @@ public:
             }
             return rc;
         }
-        std::string text;
-        for (size_t i = protocol::HEADER_SIZE; i < protocol::HEADER_SIZE + message_len; i++) {
-            text += rbuf[i];
-        }
-        logger.log("client says: " + text);
+        rbuf[protocol::HEADER_SIZE + message_len] = '\0';
+        logger.log("client says: " + std::string(&rbuf[protocol::HEADER_SIZE]));
 
         memset(wbuf, 1, sizeof(wbuf));
         const char reply[] = "pong";

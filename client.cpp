@@ -52,11 +52,7 @@ public:
             return rc;
         }
         rbuf[protocol::HEADER_SIZE + reply_message_len] = '\0';
-        std::string reply_text;
-        for (size_t i = protocol::HEADER_SIZE; i < protocol::HEADER_SIZE + reply_message_len; i++) {
-            reply_text += rbuf[i];
-        }
-        logger.log("Server replied with: " + reply_text);
+        logger.log("Server replied with: " + std::string(&rbuf[protocol::HEADER_SIZE]));
         return 0;
     }
 };
